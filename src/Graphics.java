@@ -22,9 +22,11 @@ public class Graphics extends Canvas implements Runnable {
     private Thread thread;
     private boolean running = false;
     private int fps = 60;
-    private int ups = 10;
+    private int ups = 60;
 
     private Sprite s;
+
+    private double t;
 
     public Graphics(int w, int h) {
         this.width = w;
@@ -62,8 +64,15 @@ public class Graphics extends Canvas implements Runnable {
             pixels[i] = 0;
         }
 
+        /*
         int x = (int)(Math.random()*(width-32));
         int y = (int)(Math.random()*(height-32));
+         */
+
+        int x = (int)(Math.cos(t)*200 + width/2);
+        int y = (int)(Math.sin(t)*200 + height/2);
+
+        t += 0.1;
 
         for (int i = 0 ; i < s.getHeight() ; i++) {
             for (int j = 0 ; j < s.getWidth() ; j++) {
