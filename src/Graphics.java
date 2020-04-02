@@ -29,6 +29,8 @@ public class Graphics extends Canvas implements Runnable {
     private Sprite square;
     private double t;
 
+    private int wSquare = 32;
+    private int hSquare = 32;
     private int xSquare = 0;
     private int ySquare = 0;
     private int vxSquare = 0;
@@ -55,7 +57,7 @@ public class Graphics extends Canvas implements Runnable {
         this.addMouseMotionListener(new MyMouseMotionListener());
         this.requestFocus();
 
-        square = new Sprite(32,32, 0x00FF00);
+        square = new Sprite(wSquare, hSquare, 0xFF0000);
     }
 
     private void draw() {
@@ -72,23 +74,6 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     private void update() {
-        /*
-        for (int i = 0 ; i < pixels.length ; i++) {
-            pixels[i] = 0;
-        }
-         */
-
-        int x = (int)(width/2+(width/2- square.getWidth())*Math.sin(t));
-        int y = (int)(height/2+(height/2- square.getHeight())*Math.cos(t));
-
-        t += Math.PI/180;
-
-        for (int i = 0; i < square.getHeight() ; i++) {
-            for (int j = 0; j < square.getWidth() ; j++) {
-                pixels[(y+i)*width + x+j] = square.getPixels()[i* square.getWidth()+j];
-            }
-        }
-
         // The moving magenta square
         if (xSquare + vxSquare < 0 || xSquare + vxSquare > width - square.getWidth())
             vxSquare = 0;
@@ -212,8 +197,20 @@ public class Graphics extends Canvas implements Runnable {
     private class MyMouseMotionListener implements MouseMotionListener {
         @Override
         public void mouseDragged(MouseEvent mouseEvent) {
-            xSquare = mouseEvent.getX()/scale;
-            ySquare = mouseEvent.getY()/scale;
+            int x = mouseEvent.getX() - wSquare / 2;
+            int y = mouseEvent.getY() - hSquare / 2;
+
+            if (x < width / 2) {
+                xSquare = Math.max(0, x / scale);
+            } else {
+                xSquare = Math.min(width - wSquare, x / scale);
+            }
+
+            if (y < height / 2) {
+                ySquare = Math.max(0, y / scale);
+            } else {
+                ySquare = Math.min(height - hSquare, y / scale);
+            }
         }
 
         @Override
