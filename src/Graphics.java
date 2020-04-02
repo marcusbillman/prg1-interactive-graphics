@@ -175,7 +175,20 @@ public class Graphics extends Canvas implements Runnable {
 
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
+            int x = mouseEvent.getX() - wSquare / 2;
+            int y = mouseEvent.getY() - hSquare / 2;
 
+            if (x < width / 2) {
+                xSquare = Math.max(0, x / scale);
+            } else {
+                xSquare = Math.min(width - wSquare, x / scale);
+            }
+
+            if (y < height / 2) {
+                ySquare = Math.max(0, y / scale);
+            } else {
+                ySquare = Math.min(height - hSquare, y / scale);
+            }
         }
 
         @Override
