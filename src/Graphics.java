@@ -74,7 +74,6 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     private void update() {
-        // The moving magenta square
         if (xSquare + vxSquare < 0 || xSquare + vxSquare > width - square.getWidth())
             vxSquare = 0;
         if (ySquare + vySquare < 0 || ySquare + vySquare > height - square.getHeight())
@@ -83,13 +82,6 @@ public class Graphics extends Canvas implements Runnable {
         xSquare += vxSquare;
         ySquare += vySquare;
 
-        for (int i = 0 ; i < square.getHeight() ; i++) {
-            for (int j = 0 ; j < square.getWidth() ; j++) {
-                pixels[(ySquare+i)*width + xSquare+j] = square.getPixels()[i*square.getWidth()+j];
-            }
-        }
-
-        // The mouse-controlled square
         for (int i = 0 ; i < square.getHeight() ; i++) {
             for (int j = 0 ; j < square.getWidth() ; j++) {
                 pixels[(ySquare+i)*width + xSquare+j] = square.getPixels()[i*square.getWidth()+j];
@@ -151,14 +143,18 @@ public class Graphics extends Canvas implements Runnable {
 
         @Override
         public void keyPressed(KeyEvent keyEvent) {
-            if (keyEvent.getKeyChar()=='a') {
-                vxSquare = -5;
-            } else if (keyEvent.getKeyChar()=='d') {
-                vxSquare = 5;
+            if (keyEvent.getKeyChar()=='q') {
+                square.setColor(0xFF0000);
             } else if (keyEvent.getKeyChar()=='w') {
-                vySquare = -5;
-            } else if (keyEvent.getKeyChar()=='s') {
-                vySquare = 5;
+                square.setColor(0x00FF00);
+            } else if (keyEvent.getKeyChar()=='e') {
+                square.setColor(0x0000FF);
+            } else if (keyEvent.getKeyChar()=='r') {
+                square.setColor(0xFFFF00);
+            } else if (keyEvent.getKeyChar()=='t') {
+                square.setColor(0xFFFFFF);
+            } else if (keyEvent.getKeyChar()=='y') {
+                square.setColor(0x000000);
             } else if (keyEvent.getKeyChar()==' ') {
                 clear();
             }

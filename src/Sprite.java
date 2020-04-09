@@ -3,6 +3,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * This is a class
@@ -19,9 +20,7 @@ public class Sprite {
         this.width = w;
         this.height = h;
         pixels = new int[w*h];
-        for (int i = 0 ; i < pixels.length ; i++) {
-            pixels[i] = col;
-        }
+        Arrays.fill(pixels, col);
     }
 
     public Sprite(String path) {
@@ -38,6 +37,10 @@ public class Sprite {
         this.width = image.getWidth();
         this.height = image.getHeight();
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+    }
+
+    public void setColor(int col) {
+        Arrays.fill(pixels, col);
     }
 
     public int[] getPixels() {
