@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Arrays;
 
 /**
  * This is a class
@@ -24,10 +25,9 @@ public class Graphics extends Canvas implements Runnable {
     private Thread thread;
     private boolean running = false;
     private int fps = 60;
-    private int ups = 60;
+    private int ups = 500;
 
     private Sprite square;
-    private double t;
 
     private int wSquare = 32;
     private int hSquare = 32;
@@ -139,6 +139,10 @@ public class Graphics extends Canvas implements Runnable {
         stop();
     }
 
+    private void clear() {
+        Arrays.fill(pixels, 0);
+    }
+
     private class MyKeyListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent keyEvent) {
@@ -155,6 +159,8 @@ public class Graphics extends Canvas implements Runnable {
                 vySquare = -5;
             } else if (keyEvent.getKeyChar()=='s') {
                 vySquare = 5;
+            } else if (keyEvent.getKeyChar()==' ') {
+                clear();
             }
         }
 
