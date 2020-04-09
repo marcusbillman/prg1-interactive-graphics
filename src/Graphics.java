@@ -155,6 +155,12 @@ public class Graphics extends Canvas implements Runnable {
                 square.setColor(0xFFFFFF);
             } else if (keyEvent.getKeyChar()=='y') {
                 square.setColor(0x000000);
+            } else if (keyEvent.getKeyChar()=='1') {
+                square.setSize(16);
+            } else if (keyEvent.getKeyChar()=='2') {
+                square.setSize(32);
+            } else if (keyEvent.getKeyChar()=='3') {
+                square.setSize(48);
             } else if (keyEvent.getKeyChar()==' ') {
                 clear();
             }
@@ -177,19 +183,19 @@ public class Graphics extends Canvas implements Runnable {
 
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
-            int x = mouseEvent.getX() - wSquare / 2;
-            int y = mouseEvent.getY() - hSquare / 2;
+            int x = mouseEvent.getX() - square.getWidth() / 2;
+            int y = mouseEvent.getY() - square.getHeight() / 2;
 
             if (x < width / 2) {
                 xSquare = Math.max(0, x / scale);
             } else {
-                xSquare = Math.min(width - wSquare, x / scale);
+                xSquare = Math.min(width - square.getWidth(), x / scale);
             }
 
             if (y < height / 2) {
                 ySquare = Math.max(0, y / scale);
             } else {
-                ySquare = Math.min(height - hSquare, y / scale);
+                ySquare = Math.min(height - square.getHeight(), y / scale);
             }
         }
 
@@ -212,19 +218,19 @@ public class Graphics extends Canvas implements Runnable {
     private class MyMouseMotionListener implements MouseMotionListener {
         @Override
         public void mouseDragged(MouseEvent mouseEvent) {
-            int x = mouseEvent.getX() - wSquare / 2;
-            int y = mouseEvent.getY() - hSquare / 2;
+            int x = mouseEvent.getX() - square.getWidth() / 2;
+            int y = mouseEvent.getY() - square.getHeight() / 2;
 
             if (x < width / 2) {
                 xSquare = Math.max(0, x / scale);
             } else {
-                xSquare = Math.min(width - wSquare, x / scale);
+                xSquare = Math.min(width - square.getWidth(), x / scale);
             }
 
             if (y < height / 2) {
                 ySquare = Math.max(0, y / scale);
             } else {
-                ySquare = Math.min(height - hSquare, y / scale);
+                ySquare = Math.min(height - square.getHeight(), y / scale);
             }
         }
 

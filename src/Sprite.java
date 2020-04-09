@@ -43,6 +43,11 @@ public class Sprite {
         Arrays.fill(pixels, col);
     }
 
+    public void setSize(int size) {
+        this.width = size;
+        this.height = size;
+    }
+
     public int[] getPixels() {
         return pixels;
     }
