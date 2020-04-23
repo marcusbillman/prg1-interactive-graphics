@@ -25,7 +25,6 @@ public class Graphics extends Canvas implements Runnable {
     private Thread thread;
     private boolean running = false;
     private int fps = 60;
-    private int ups = 500;
 
     private Sprite square;
 
@@ -106,22 +105,14 @@ public class Graphics extends Canvas implements Runnable {
 
     @Override
     public void run() {
-        double frameUpdateinteval = 1000000000.0 / fps;
-        double stateUpdateinteval = 1000000000.0 / ups;
+        double frameUpdateInterval = 1000000000.0 / fps;
         double deltaFrame = 0;
-        double deltaUpdate = 0;
         long lastTime = System.nanoTime();
 
         while (running) {
             long now = System.nanoTime();
-            deltaFrame += (now - lastTime) / frameUpdateinteval;
-            deltaUpdate += (now - lastTime) / stateUpdateinteval;
+            deltaFrame += (now - lastTime) / frameUpdateInterval;
             lastTime = now;
-
-            while (deltaUpdate >= 1) {
-                update();
-                deltaUpdate--;
-            }
 
             while (deltaFrame >= 1) {
                 draw();
@@ -183,20 +174,8 @@ public class Graphics extends Canvas implements Runnable {
 
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
-            int x = mouseEvent.getX() - square.getWidth() / 2;
-            int y = mouseEvent.getY() - square.getHeight() / 2;
-
-            if (x < width / 2) {
-                xSquare = Math.max(0, x / scale);
-            } else {
-                xSquare = Math.min(width - square.getWidth(), x / scale);
-            }
-
-            if (y < height / 2) {
-                ySquare = Math.max(0, y / scale);
-            } else {
-                ySquare = Math.min(height - square.getHeight(), y / scale);
-            }
+            moveSquare(mouseEvent);
+            update();
         }
 
         @Override
@@ -218,25 +197,30 @@ public class Graphics extends Canvas implements Runnable {
     private class MyMouseMotionListener implements MouseMotionListener {
         @Override
         public void mouseDragged(MouseEvent mouseEvent) {
-            int x = mouseEvent.getX() - square.getWidth() / 2;
-            int y = mouseEvent.getY() - square.getHeight() / 2;
-
-            if (x < width / 2) {
-                xSquare = Math.max(0, x / scale);
-            } else {
-                xSquare = Math.min(width - square.getWidth(), x / scale);
-            }
-
-            if (y < height / 2) {
-                ySquare = Math.max(0, y / scale);
-            } else {
-                ySquare = Math.min(height - square.getHeight(), y / scale);
-            }
+            moveSquare(mouseEvent);
+            update();
         }
 
         @Override
         public void mouseMoved(MouseEvent mouseEvent) {
 
+        }
+    }
+
+    private void moveSquare(MouseEvent mouseEvent) {
+        int x = mouseEvent.getX() - square.getWidth() / 2;
+        int y = mouseEvent.getY() - square.getHeight() / 2;
+
+        if (x < width / 2) {
+            xSquare = Math.max(0, x / scale);
+        } else {
+            xSquare = Math.min(width - square.getWidth(), x / scale);
+        }
+
+        if (y < height / 2) {
+            ySquare = Math.max(0, y / scale);
+        } else {
+            ySquare = Math.min(height - square.getHeight(), y / scale);
         }
     }
 
