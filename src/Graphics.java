@@ -29,8 +29,8 @@ public class Graphics extends Canvas implements Runnable {
 
     private Sprite square;
 
-    private int wSquare = 32;
-    private int hSquare = 32;
+    private int wSquare = 48;
+    private int hSquare = 48;
     private int xSquare = 0;
     private int ySquare = 0;
     private int vxSquare = 0;
