@@ -28,8 +28,8 @@ public class Graphics extends Canvas implements Runnable {
 
     private Sprite square;
 
-    private int wSquare = 48;
-    private int hSquare = 48;
+    private int wSquare = 64;
+    private int hSquare = 64;
     private int xSquare = 0;
     private int ySquare = 0;
     private int vxSquare = 0;
@@ -57,6 +57,7 @@ public class Graphics extends Canvas implements Runnable {
         this.requestFocus();
 
         square = new Sprite(wSquare, hSquare, 0xFF0000);
+        square.setSize(32);
     }
 
     private void draw() {
@@ -147,11 +148,11 @@ public class Graphics extends Canvas implements Runnable {
             } else if (keyEvent.getKeyChar()=='y') {
                 square.setColor(0x000000);
             } else if (keyEvent.getKeyChar()=='1') {
-                square.setSize(16);
+                square.setSize(8);
             } else if (keyEvent.getKeyChar()=='2') {
                 square.setSize(32);
             } else if (keyEvent.getKeyChar()=='3') {
-                square.setSize(48);
+                square.setSize(64);
             } else if (keyEvent.getKeyChar()==' ') {
                 clear();
             }
