@@ -13,7 +13,7 @@ import java.util.Arrays;
  * @author Magnus Silverdal
  */
 public class Graphics extends Canvas implements Runnable {
-    private String title = "Graphics";
+    private String title = "BadPaint";
     private int width;
     private int height;
 
@@ -35,6 +35,8 @@ public class Graphics extends Canvas implements Runnable {
     private int vxSquare = 0;
     private int vySquare = 0;
 
+    private String brushColor = "Red";
+
     public Graphics(int w, int h, int scale) {
         this.width = w;
         this.height = h;
@@ -44,7 +46,6 @@ public class Graphics extends Canvas implements Runnable {
         Dimension size = new Dimension(scale*width, scale*height);
         setPreferredSize(size);
         frame = new JFrame();
-        frame.setTitle(title);
         frame.add(this);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,6 +59,7 @@ public class Graphics extends Canvas implements Runnable {
 
         square = new Sprite(wSquare, hSquare, 0xFF0000);
         square.setSize(32);
+        setWindowTitle();
     }
 
     private void draw() {
@@ -137,16 +139,22 @@ public class Graphics extends Canvas implements Runnable {
         public void keyPressed(KeyEvent keyEvent) {
             if (keyEvent.getKeyChar()=='q') {
                 square.setColor(0xFF0000);
+                brushColor = "Red";
             } else if (keyEvent.getKeyChar()=='w') {
                 square.setColor(0x00FF00);
+                brushColor = "Green";
             } else if (keyEvent.getKeyChar()=='e') {
                 square.setColor(0x0000FF);
+                brushColor = "Blue";
             } else if (keyEvent.getKeyChar()=='r') {
                 square.setColor(0xFFFF00);
+                brushColor = "Yellow";
             } else if (keyEvent.getKeyChar()=='t') {
                 square.setColor(0xFFFFFF);
+                brushColor = "White";
             } else if (keyEvent.getKeyChar()=='y') {
                 square.setColor(0x000000);
+                brushColor = "Black";
             } else if (keyEvent.getKeyChar()=='1') {
                 square.setSize(8);
             } else if (keyEvent.getKeyChar()=='2') {
@@ -156,6 +164,7 @@ public class Graphics extends Canvas implements Runnable {
             } else if (keyEvent.getKeyChar()==' ') {
                 clear();
             }
+            setWindowTitle();
         }
 
         @Override
@@ -225,4 +234,7 @@ public class Graphics extends Canvas implements Runnable {
         }
     }
 
+    private void setWindowTitle() {
+        frame.setTitle(title + " | Color: " + brushColor + " | Size: " + square.getWidth());
+    }
 }
