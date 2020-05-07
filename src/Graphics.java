@@ -50,6 +50,7 @@ public class Graphics extends Canvas implements Runnable {
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.setVisible(true);
 
         this.addKeyListener(new MyKeyListener());
