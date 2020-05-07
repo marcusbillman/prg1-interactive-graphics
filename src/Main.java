@@ -1,5 +1,5 @@
 /**
- * This is a class
+ * Main class that starts the graphics
  * Created 2020-03-25
  *
  * @author Magnus Silverdal

@@ -7,10 +7,10 @@ import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 
 /**
- * This is a class
+ * Drawing application and everything graphics related
  * Created 2020-03-25
  *
- * @author Magnus Silverdal
+ * @author Marcus Billman
  */
 public class Graphics extends Canvas implements Runnable {
     private String title = "BadPaint";

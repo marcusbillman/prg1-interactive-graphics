@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * This is a class
+ * Sprite for use in Graphics class
  * Created 2020-03-26
  *
- * @author Magnus Silverdal
+ * @author Marcus Billman
  */
 public class Sprite {
     private int width;
