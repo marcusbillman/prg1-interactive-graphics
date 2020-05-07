@@ -35,7 +35,8 @@ public class Graphics extends Canvas implements Runnable {
     private int vxSquare = 0;
     private int vySquare = 0;
 
-    private String brushColor = "Red";
+    private Color brushColor = new Color(0xFF0000);
+    private String brushColorName = "Red";
 
     public Graphics(int w, int h, int scale) {
         this.width = w;
@@ -51,6 +52,14 @@ public class Graphics extends Canvas implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
+
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (UnsupportedLookAndFeelException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        }
+
         frame.setVisible(true);
 
         this.addKeyListener(new MyKeyListener());
@@ -140,22 +149,35 @@ public class Graphics extends Canvas implements Runnable {
         public void keyPressed(KeyEvent keyEvent) {
             if (keyEvent.getKeyChar()=='q') {
                 square.setColor(0xFF0000);
-                brushColor = "Red";
+                brushColor = new Color(0xFF0000);
+                brushColorName = "Red";
             } else if (keyEvent.getKeyChar()=='w') {
                 square.setColor(0x00FF00);
-                brushColor = "Green";
+                brushColor = new Color(0x00FF00);
+                brushColorName = "Green";
             } else if (keyEvent.getKeyChar()=='e') {
                 square.setColor(0x0000FF);
-                brushColor = "Blue";
+                brushColor = new Color(0x0000FF);
+                brushColorName = "Blue";
             } else if (keyEvent.getKeyChar()=='r') {
                 square.setColor(0xFFFF00);
-                brushColor = "Yellow";
+                brushColor = new Color(0xFFFF00);
+                brushColorName = "Yellow";
             } else if (keyEvent.getKeyChar()=='t') {
                 square.setColor(0xFFFFFF);
-                brushColor = "White";
+                brushColor = new Color(0xFFFFFF);
+                brushColorName = "White";
             } else if (keyEvent.getKeyChar()=='y') {
                 square.setColor(0x000000);
-                brushColor = "Black";
+                brushColor = new Color(0x000000);
+                brushColorName = "Black";
+            } else if (keyEvent.getKeyChar()=='u') {
+                Color pickedColor = JColorChooser.showDialog(frame, "Color Picker", brushColor);
+                if (pickedColor != null) {
+                    brushColor = pickedColor;
+                    square.setColor(pickedColor.getRGB());
+                    brushColorName = pickedColor.getRed() + ", " + pickedColor.getBlue() + ", " + pickedColor.getBlue();
+                }
             } else if (keyEvent.getKeyChar()=='1') {
                 square.setSize(8);
             } else if (keyEvent.getKeyChar()=='2') {
@@ -236,6 +258,6 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     private void setWindowTitle() {
-        frame.setTitle(title + " | Color: " + brushColor + " | Size: " + square.getWidth());
+        frame.setTitle(title + " | Color: " + brushColorName + " | Size: " + square.getWidth());
     }
 }
