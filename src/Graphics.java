@@ -28,8 +28,8 @@ public class Graphics extends Canvas implements Runnable {
 
     private Sprite square;
 
-    private int wSquare = 64;
-    private int hSquare = 64;
+    private int wSquare = 256;
+    private int hSquare = 256;
     private int xSquare = 0;
     private int ySquare = 0;
     private int vxSquare = 0;
@@ -181,9 +181,19 @@ public class Graphics extends Canvas implements Runnable {
             } else if (keyEvent.getKeyChar()=='1') {
                 square.setSize(8);
             } else if (keyEvent.getKeyChar()=='2') {
-                square.setSize(32);
+                square.setSize(16);
             } else if (keyEvent.getKeyChar()=='3') {
+                square.setSize(32);
+            } else if (keyEvent.getKeyChar()=='4') {
                 square.setSize(64);
+            } else if (keyEvent.getKeyChar()=='5') {
+                try {
+                    int pickedSize = Integer.parseInt(JOptionPane.showInputDialog(frame, "Brush size (1-256)", square.getWidth()));
+                    if (pickedSize >= 1 && pickedSize <= 256) {
+                        square.setSize(pickedSize);
+                    }
+                } catch (Exception e) {
+                }
             } else if (keyEvent.getKeyChar()==' ') {
                 clear();
             }
