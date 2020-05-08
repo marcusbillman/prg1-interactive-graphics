@@ -1,9 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -196,6 +199,8 @@ public class Graphics extends Canvas implements Runnable {
                 }
             } else if (keyEvent.getKeyChar()==' ') {
                 clear();
+            } else if (keyEvent.getKeyChar()=='s') {
+                saveImage();
             }
             setWindowTitle();
         }
@@ -269,5 +274,22 @@ public class Graphics extends Canvas implements Runnable {
 
     private void setWindowTitle() {
         frame.setTitle(title + " | Color: " + brushColorName + " | Size: " + square.getWidth());
+    }
+
+    public void saveImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save as");
+
+        int userSelection = fileChooser.showSaveDialog(frame);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try {
+                ImageIO.write(image, "png", file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
