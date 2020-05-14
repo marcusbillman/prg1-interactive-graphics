@@ -40,6 +40,7 @@ public class Graphics extends Canvas implements Runnable {
 
     private Color brushColor = new Color(0xFF0000);
     private String brushColorName = "Red";
+    private boolean unsaved = false;
 
     public Graphics(int w, int h, int scale) {
         this.width = w;
@@ -52,7 +53,7 @@ public class Graphics extends Canvas implements Runnable {
         frame = new JFrame();
         frame.add(this);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
@@ -64,6 +65,12 @@ public class Graphics extends Canvas implements Runnable {
         }
 
         frame.setVisible(true);
+
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+        });
 
         this.addKeyListener(new MyKeyListener());
         this.addMouseListener(new MyMouseListener());
@@ -227,6 +234,7 @@ public class Graphics extends Canvas implements Runnable {
         public void mousePressed(MouseEvent mouseEvent) {
             moveSquare(mouseEvent);
             update();
+            unsaved = true;
         }
 
         @Override
@@ -290,9 +298,21 @@ public class Graphics extends Canvas implements Runnable {
 
             try {
                 ImageIO.write(image, "png", file);
+                unsaved = false;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void exit() {
+        if (unsaved) {
+            String[] buttons = { "Save", "Don't Save", "Cancel" };
+            int response = JOptionPane.showOptionDialog(frame, "Would you like to save your changes?", "Unsaved changes",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttons, buttons[0]);
+            if (response == JOptionPane.OK_OPTION) saveImage();
+            else if (response == JOptionPane.CANCEL_OPTION) return;
+        }
+        System.exit(0);
     }
 }
