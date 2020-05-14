@@ -198,7 +198,10 @@ public class Graphics extends Canvas implements Runnable {
                 } catch (Exception e) {
                 }
             } else if (keyEvent.getKeyChar()==' ') {
-                clear();
+                String[] buttons = { "Clear", "Cancel" };
+                int response = JOptionPane.showOptionDialog(frame, "Are you sure you want to clear the canvas?\nThis can't be undone.", "Clear canvas",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, buttons, buttons[1]);
+                if (response == JOptionPane.OK_OPTION) clear();
             } else if (keyEvent.getKeyChar()=='s') {
                 saveImage();
             }
