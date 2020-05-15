@@ -42,6 +42,7 @@ public class Graphics extends Canvas implements Runnable {
     private Color brushColor = new Color(0xFF0000);
     private String brushColorName = "Red";
     private boolean unsaved = false;
+    private File currentFile;
 
     public Graphics(int w, int h, int scale) {
         this.width = w;
@@ -285,7 +286,9 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     private void setWindowTitle() {
-        frame.setTitle(title + " | Color: " + brushColorName + " | Size: " + square.getWidth());
+        frame.setTitle(
+            (currentFile != null ? currentFile.getName() + " | " : "")
+            + title + " | Color: " + brushColorName + " | Size: " + square.getWidth());
     }
 
     public void saveImage() {
@@ -304,6 +307,7 @@ public class Graphics extends Canvas implements Runnable {
             try {
                 ImageIO.write(image, "png", file);
                 unsaved = false;
+                currentFile = file;
             } catch (IOException e) {
                 e.printStackTrace();
             }
