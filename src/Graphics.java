@@ -212,7 +212,9 @@ public class Graphics extends Canvas implements Runnable {
                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, buttons, buttons[1]);
                 if (response == JOptionPane.OK_OPTION) clear();
             } else if (keyEvent.getKeyChar()=='s') {
-                saveImage();
+                save();
+            } else if (keyEvent.getKeyChar()=='x') {
+                saveAs();
             }
             setWindowTitle();
         }
@@ -291,7 +293,15 @@ public class Graphics extends Canvas implements Runnable {
             + title + " | Color: " + brushColorName + " | Size: " + square.getWidth());
     }
 
-    public void saveImage() {
+    public void save() {
+        if (currentFile != null) {
+            saveImage(currentFile);
+        } else {
+            saveAs();
+        }
+    }
+
+    public void saveAs() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save as");
         fileChooser.setFileFilter(new FileNameExtensionFilter("*.png", "png"));
@@ -304,13 +314,17 @@ public class Graphics extends Canvas implements Runnable {
             if (!file.getName().endsWith(".png")) {
                 file = new File(file.getAbsolutePath()+".png");
             }
-            try {
-                ImageIO.write(image, "png", file);
-                unsaved = false;
-                currentFile = file;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            saveImage(file);
+        }
+    }
+
+    public void saveImage(File file) {
+        try {
+            ImageIO.write(image, "png", file);
+            unsaved = false;
+            currentFile = file;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -319,7 +333,7 @@ public class Graphics extends Canvas implements Runnable {
             String[] buttons = { "Save", "Don't Save", "Cancel" };
             int response = JOptionPane.showOptionDialog(frame, "Would you like to save your changes?", "Unsaved changes",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttons, buttons[0]);
-            if (response == JOptionPane.OK_OPTION) saveImage();
+            if (response == JOptionPane.OK_OPTION) save();
             else if (response == JOptionPane.CANCEL_OPTION) return;
         }
         System.exit(0);
