@@ -211,10 +211,12 @@ public class Graphics extends Canvas implements Runnable {
                 int response = JOptionPane.showOptionDialog(frame, "Are you sure you want to clear the canvas?\nThis can't be undone.", "Clear canvas",
                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, buttons, buttons[1]);
                 if (response == JOptionPane.OK_OPTION) clear();
-            } else if (keyEvent.getKeyChar()=='s') {
-                save();
-            } else if (keyEvent.getKeyChar()=='x') {
-                saveAs();
+            } else if (keyEvent.getKeyCode()==83 && keyEvent.isControlDown()) {
+                if (keyEvent.isShiftDown()) {
+                    saveAs();
+                } else {
+                    save();
+                }
             }
             setWindowTitle();
         }
@@ -239,6 +241,7 @@ public class Graphics extends Canvas implements Runnable {
             moveSquare(mouseEvent);
             update();
             unsaved = true;
+            setWindowTitle();
         }
 
         @Override
@@ -289,7 +292,7 @@ public class Graphics extends Canvas implements Runnable {
 
     private void setWindowTitle() {
         frame.setTitle(
-            (currentFile != null ? currentFile.getName() + " | " : "")
+            (currentFile != null ? currentFile.getName() + (unsaved ? "*" : "") + " | " : "")
             + title + " | Color: " + brushColorName + " | Size: " + square.getWidth());
     }
 
