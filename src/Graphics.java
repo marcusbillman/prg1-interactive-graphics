@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
@@ -290,12 +291,16 @@ public class Graphics extends Canvas implements Runnable {
     public void saveImage() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save as");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("*.png", "png"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
 
         int userSelection = fileChooser.showSaveDialog(frame);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-
+            if (!file.getName().endsWith(".png")) {
+                file = new File(file.getAbsolutePath()+".png");
+            }
             try {
                 ImageIO.write(image, "png", file);
                 unsaved = false;
