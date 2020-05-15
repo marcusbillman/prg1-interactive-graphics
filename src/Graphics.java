@@ -331,7 +331,10 @@ public class Graphics extends Canvas implements Runnable {
     public void exit() {
         if (unsaved) {
             String[] buttons = { "Save", "Don't Save", "Cancel" };
-            int response = JOptionPane.showOptionDialog(frame, "Would you like to save your changes?", "Unsaved changes",
+            String message = currentFile != null
+                    ? "Would you like to save your changes to " + currentFile.getName() + " before exiting?"
+                    : "Would you like to save your changes before exiting?";
+            int response = JOptionPane.showOptionDialog(frame, message, "Unsaved changes",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttons, buttons[0]);
             if (response == JOptionPane.OK_OPTION) save();
             else if (response == JOptionPane.CANCEL_OPTION) return;
