@@ -25,4 +25,6 @@ A simple drawing application written in Java.
     * `T` White
     * `Y` Black
     * `U` Custom brush colour
-* `Space` clears the canvas.
+* `Space` Clear the canvas.
+* `Ctrl+S` Save the current file
+* `Ctrl+Shift+S` Save as a new file
